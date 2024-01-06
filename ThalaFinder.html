@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thala Finder</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 50px;
+      }
+      input {
+        padding: 10px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #output {
+        margin-top: 20px;
+        font-size: 18px;
+        color: green;
+      }
+      #thalaVideo {
+            display: none;
+            height:300px;
+            width: 300px;
+            margin: 20px auto;
+        }
+        #socialIcons {
+            margin-top: 20px;
+        }
+        #socialIcons img {
+            width: 30px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Thala Finder</h1>
+    <label for="input">Enter a letter word or a number or mix :</label>
+    <input
+      type="text"
+      id="input"
+      pattern="[A-Za-z0-9]"
+      required
+    />
+    <button onclick="findThala()">Search</button>
+    <div id="output"></div>
+    <video id="thalaVideo" >
+      <source src="Video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>
+  <div id="socialIcons">
+    <button onclick="shareOnFacebook()">Share on Facebook</button>
+    <button onclick="shareOnTwitter()">Share on Twitter</button>
+</div>
+    <script>
+   function findThala() {
+    const userInput = document.getElementById('input').value;
+    let thalaMessage = '';
+
+    if (/^[A-Za-z]{7}$/.test(userInput)) {
+        thalaMessage = `Input: ${userInput}, Thala for a reason!`;
+        showThalaVideo();
+    } else if (/^\d{1,7}$/.test(userInput) || /^\d{7}$/.test(userInput)) {
+        const sum = userInput.replace(/\D/g, '').split('').reduce((acc, digit) => acc + parseInt(digit, 10), 0);
+        const isSevenDigits = /^\d{7}$/.test(userInput);
+
+        if (sum === 7 || isSevenDigits || userInput.includes('7')) {
+            thalaMessage = `Input: ${userInput}, Thala for a reason!`;
+            showThalaVideo();
+        } else {
+            thalaMessage = 'You are not a THALA for a Reason';
+        }
+    } else if (userInput.includes('7')) {
+        thalaMessage = `${userInput}, Thala for a reason!`;
+        showThalaVideo();
+    } else {
+        thalaMessage = 'You are not a THALA for a Reason';
+        hideThalaVideo();
+    }
+
+    document.getElementById('output').innerText = thalaMessage;
+}
+        function showThalaVideo() {
+            const video = document.getElementById('thalaVideo');
+            video.style.display = 'block';
+            video.play();
+        }
+
+        function hideThalaVideo() {
+            const video = document.getElementById('thalaVideo');
+            video.style.display = 'none';
+            video.pause();
+        }
+        function shareOnFacebook() {
+            const shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const shareUrl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=Check out Thala Finder!';
+            window.open(shareUrl, '_blank');
+        }
+    </script>
+  </body>
+</html>
