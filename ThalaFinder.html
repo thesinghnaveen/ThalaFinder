@@ -62,8 +62,10 @@
     <script>
    function findThala() {
     const userInput = document.getElementById('input').value;
+    const alphanumericRegex = /^[A-Za-z0-9]*$/;
     let thalaMessage = '';
-
+    if (alphanumericRegex.test(userInput))
+    {
     if (/^[A-Za-z]{7}$/.test(userInput)) {
         thalaMessage = `Input: ${userInput}, Thala for a reason!`;
         showThalaVideo();
@@ -80,10 +82,19 @@
     } else if (userInput.includes('7')) {
         thalaMessage = `${userInput}, Thala for a reason!`;
         showThalaVideo();
-    } else {
+    }
+    else if (userInput === 'seven' || userInput === 'dhoni' || userInput === "thala" ){
+      thalaMessage = `${userInput}, Thala for a reason!`;
+        showThalaVideo();
+    } 
+    else {
         thalaMessage = 'You are not a THALA for a Reason';
         hideThalaVideo();
     }
+  }
+  else{
+    thalaMessage = 'Plese do not input special charecter ';
+  }
 
     document.getElementById('output').innerText = thalaMessage;
 }
